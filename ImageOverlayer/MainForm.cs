@@ -11,13 +11,13 @@ using System.Runtime.InteropServices;
 using Utilities;
 
 namespace ImageOverlayer {
-	public partial class Form1 : Form {
+	public partial class MainForm : Form {
         private static globalKeyboardHook gkh;
 
         private bool overlayed = false;
         private double opacity = 0.5;
 
-        public Form1() {
+        public MainForm() {
             InitializeComponent();
             this.TopMost = true;
             this.KeyPreview = true;
@@ -37,9 +37,9 @@ namespace ImageOverlayer {
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -70,7 +70,7 @@ namespace ImageOverlayer {
             overlayed = !overlayed;
         }
 
-        private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+        private void Form1_Closing(object sender, CancelEventArgs e) {
             // Make sure we unhook once the form closes
             gkh.unhook();
         }
@@ -86,20 +86,22 @@ namespace ImageOverlayer {
             MouseEventArgs me = (MouseEventArgs) e;
 
             if(me.Button == MouseButtons.Right) {
-                using(OpenFileDialog dlg = new OpenFileDialog()) {
-                    dlg.Title = "Open Image";
+				using(OpenFileDialog dlg = new OpenFileDialog()) {
+					dlg.Title = "Open Image";
 
-                    if(dlg.ShowDialog() == DialogResult.OK) {
-                        var b = new Bitmap(dlg.FileName);
+					if(dlg.ShowDialog() == DialogResult.OK) {
+						using(var fromFile = Image.FromFile(dlg.FileName)) {
+							Bitmap b = new Bitmap(fromFile);
 
-                        pictureBox1.Image = b;
+							pictureBox1.Image = b;
 
-                        this.Size = new Size(b.Width, b.Height);
+							this.Size = new Size(b.Width + 2, b.Height + 2);
 
-                        this.Controls.RemoveByKey("label1");
-                    }
-                }
-            } else if(me.Button == MouseButtons.Middle) {
+							this.Controls.RemoveByKey("label1");
+						}
+					}
+				}
+			} else if(me.Button == MouseButtons.Middle) {
                 Application.Exit();
             }
         }

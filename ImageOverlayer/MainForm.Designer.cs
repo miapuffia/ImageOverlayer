@@ -1,6 +1,6 @@
 ﻿
 namespace ImageOverlayer {
-	partial class Form1 {
+	partial class MainForm {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -31,6 +31,7 @@ namespace ImageOverlayer {
 			// 
 			// pictureBox1
 			// 
+			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
@@ -54,7 +55,7 @@ namespace ImageOverlayer {
 			this.label1.Click += new System.EventHandler(this.label1_Click);
 			this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
 			// 
-			// Form1
+			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -62,7 +63,7 @@ namespace ImageOverlayer {
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.pictureBox1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Name = "Form1";
+			this.Name = "MainForm";
 			this.Text = "Form1";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
